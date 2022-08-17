@@ -30,10 +30,6 @@ app.get("/api/pizza/:id", (req: Request, res: Response) => {
 });
 
 app.post("/api/pizza", validatePizzaBody, (req: Request, res: Response) => {
-  if (!req.body.name || req.body.name.length < 4) {
-    res.status(400).send("Need name ");
-    return;
-  }
   const pizza = {
     id: pizzas.length + 1,
     name: req.body.name,
@@ -54,7 +50,6 @@ app.put("/api/pizza/:id", validatePizzaBody, (req: Request, res: Response) => {
 
 function validatePizzaBody(req: Request, res: Response, next: NextFunction) {
   const schema = joi.object({ name: joi.string().min(4).required() });
-
   const result = schema.validate(req.body);
   if (result.error) {
     res.status(400).json(result);
