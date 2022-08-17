@@ -5,6 +5,7 @@ Content-Type:application/json
 
 ###GET ALL PIZZAZ
 GET http://localhost:3000/api/pizza
+Content-Type: application/json
 
 ###POST HAWAII
 POST http://localhost:3000/api
@@ -13,3 +14,7 @@ Content-Type:application/json
 {
     "name":"hawaii"
 }
+
+###DELETE HAWAII
+DELETE http://localhost:3000/api/pizza/1
+Content-Type: application/json

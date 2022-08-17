@@ -22,7 +22,7 @@ app.get("/api/pizza", (req: Request, res: Response) => {
 app.get("/api/pizza/:id", (req: Request, res: Response) => {
   const pizza = pizzas.find((c) => c.id === parseInt(req.params.id));
   if (!pizza) {
-    res.status(404).send({ message: "no pizza with that id" });
+    return res.status(404).send({ message: "no pizza with that id" });
   } else
     res
       .status(200)
@@ -36,6 +36,18 @@ app.post("/api/pizza", validatePizzaBody, (req: Request, res: Response) => {
   };
   pizzas.push(pizza);
   res.send(pizza);
+});
+
+app.delete("/api/pizza/:id", (req: Request, res: Response) => {
+  const pizza = pizzas.find((c) => c.id === parseInt(req.params.id));
+  if (!pizza) {
+    res.status(404).send("not found");
+    return;
+  }
+  const index = pizzas.indexOf(pizza);
+  pizzas.splice(index, 1);
+
+  res.status(200).send(pizza.name + " removed");
 });
 
 app.put("/api/pizza/:id", validatePizzaBody, (req: Request, res: Response) => {
