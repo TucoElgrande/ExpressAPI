@@ -1,0 +1,15 @@
+###GET ONE OBJECT
+GET http://localhost:3000/api/pizza/
+Content-Type:application/json
+
+
+###GET ALL PIZZAZ
+GET http://localhost:3000/api/pizza
+
+###POST HAWAII
+POST http://localhost:3000/api
+Content-Type:application/json
+
+{
+    "name":"hawaii"
+}

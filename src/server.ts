@@ -1,12 +1,64 @@
-import express from "express"
+import { NextFunction, Request, Response } from "express";
 
-const app = express()
+const joi = require("joi");
+const express = require("express");
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.get("/", (req, res) => {
-    res.status(200).json("hello world")
+app.use(express.json());
 
-})
+app.listen(PORT, () => console.log(`Listening on port ${PORT}...`));
 
-app.listen(3000, () => {
-    console.log("server is running on: http://localhost:3000")
-})
+const pizzas = [
+  { id: 1, name: "hawaii" },
+  { id: 2, name: "margaritha" },
+  { id: 3, name: "kebab pizza" },
+];
+
+app.get("/api/pizza", (req: Request, res: Response) => {
+  res.send(pizzas);
+});
+
+app.get("/api/pizza/:id", (req: Request, res: Response) => {
+  const pizza = pizzas.find((c) => c.id === parseInt(req.params.id));
+  if (!pizza) {
+    res.status(404).send({ message: "no pizza with that id" });
+  } else
+    res
+      .status(200)
+      .send({ message: "yes that pizza exists and is called " + pizza.name });
+});
+
+app.post("/api/pizza", validatePizzaBody, (req: Request, res: Response) => {
+  if (!req.body.name || req.body.name.length < 4) {
+    res.status(400).send("Need name ");
+    return;
+  }
+  const pizza = {
+    id: pizzas.length + 1,
+    name: req.body.name,
+  };
+  pizzas.push(pizza);
+  res.send(pizza);
+});
+
+app.put("/api/pizza/:id", validatePizzaBody, (req: Request, res: Response) => {
+  const pizza = pizzas.find((c) => c.id === parseInt(req.params.id));
+  if (!pizza) {
+    res.status(404).send("not found");
+    return;
+  }
+  pizza.name = req.body.name;
+  res.send(pizza);
+});
+
+function validatePizzaBody(req: Request, res: Response, next: NextFunction) {
+  const schema = joi.object({ name: joi.string().min(4).required() });
+
+  const result = schema.validate(req.body);
+  if (result.error) {
+    res.status(400).json(result);
+    return;
+  }
+  next();
+}
