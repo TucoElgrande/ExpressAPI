@@ -13,13 +13,13 @@ interface Pizza {
   id: number,
   name: string,
   filling: string,
-  size?: string
+  size: string
 }
 
 const pizzas: Pizza[] = [
-  { id: 1, name: "hawaii" },
-  { id: 2, name: "margaritha" },
-  { id: 3, name: "kebab pizza" },
+  { id: 1, name: "hawaii", filling: "pineapple", size: "child pizza" },
+  { id: 2, name: "margaritha", filling: "tomato sauce", size: "regular" },
+  { id: 3, name: "kebab pizza", filling: "kebab", size: "family" },
 ];
 
 app.get("/api/pizza", (req: Request, res: Response) => {
@@ -40,6 +40,8 @@ app.post("/api/pizza", validatePizzaBody, (req: Request, res: Response) => {
   const pizza = {
     id: pizzas.length + 1,
     name: req.body.name,
+    filling: req.body.filling,
+    size: req.body.size
   };
   pizzas.push(pizza);
   res.send(pizza);
@@ -68,7 +70,7 @@ app.put("/api/pizza/:id", validatePizzaBody, (req: Request, res: Response) => {
 });
 
 function validatePizzaBody(req: Request, res: Response, next: NextFunction) {
-  const schema = joi.object({ name: joi.string().min(4).required() });
+  const schema = joi.object({ name: joi.string().min(4).required(), filling: joi.string().min(4).required(), size: joi.string().min(4) });
   const result = schema.validate(req.body);
   if (result.error) {
     res.status(400).json(result);
