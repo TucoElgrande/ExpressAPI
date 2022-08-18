@@ -9,7 +9,14 @@ app.use(express.json());
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}...`));
 
-const pizzas = [
+interface Pizza {
+  id: number,
+  name: string,
+  filling: string,
+  size?: string
+}
+
+const pizzas: Pizza[] = [
   { id: 1, name: "hawaii" },
   { id: 2, name: "margaritha" },
   { id: 3, name: "kebab pizza" },
