@@ -1,0 +1,22 @@
+{
+  "pizzas": [
+    {
+      "id": 1,
+      "name": "hawaii",
+      "filling": "pineapple",
+      "size": "child pizza"
+    },
+    {
+      "id": 2,
+      "name": "margaritha",
+      "filling": "tomato sauce",
+      "size": "regular"
+    },
+    {
+      "id": 3,
+      "name": "kebab pizza",
+      "filling": "kebab",
+      "size": "family"
+    }
+  ]
+}

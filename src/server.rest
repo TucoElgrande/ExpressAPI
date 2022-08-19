@@ -1,20 +1,30 @@
 ###GET ONE OBJECT
-GET http://localhost:3000/api/pizza/
+GET http://localhost:3000/api/pizza/2
 Content-Type:application/json
-
 
 ###GET ALL PIZZAZ
 GET http://localhost:3000/api/pizza
 Content-Type: application/json
 
-###POST HAWAII
-POST http://localhost:3000/api
+###POST ocean pizza
+POST http://localhost:3000/api/pizza
 Content-Type:application/json
 
 {
-    "name":"hawaii"
+    "name":"ocean pizza",
+    "filling":"tuna",
+    "size":"small"
+}
+### PUT PIZZA
+PUT http://localhost:3000/api/pizza/2
+Content-Type: application/json
+
+{
+    "name":"pizza two",
+    "filling":"pommes",
+    "size":"gigantic"
 }
 
 ###DELETE HAWAII
-DELETE http://localhost:3000/api/pizza/1
+DELETE http://localhost:3000/api/pizza/2
 Content-Type: application/json

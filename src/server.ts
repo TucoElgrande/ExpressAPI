@@ -1,12 +1,27 @@
 import { NextFunction, Request, Response } from "express";
 
+const fs = require('fs')
 const joi = require("joi");
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
+function loadJSON(filename = '') {
+  return JSON.parse(fs.existsSync(filename)
+    ? fs.readFileSync(filename).toString()
+    : "null")
+}
 
+const data = loadJSON("pizza.json")
+
+// console.log(loadJSON("pizza.json"))
+
+function saveJSON(filename = "", json = '""') {
+  return fs.writeFileSync(filename, JSON.stringify(json, null, 2))
+}
+saveJSON("pizza.json", data)
+
+app.use(express.json());
 app.listen(PORT, () => console.log(`Listening on port ${PORT}...`));
 
 interface Pizza {
@@ -23,7 +38,8 @@ const pizzas: Pizza[] = [
 ];
 
 app.get("/api/pizza", (req: Request, res: Response) => {
-  res.send(pizzas);
+  res.send(pizzas)
+  // res.send(loadJSON("pizza.json"));
 });
 
 app.get("/api/pizza/:id", (req: Request, res: Response) => {
@@ -33,7 +49,7 @@ app.get("/api/pizza/:id", (req: Request, res: Response) => {
   } else
     res
       .status(200)
-      .send({ message: "yes that pizza exists and is called " + pizza.name });
+      .send({ pizza });
 });
 
 app.post("/api/pizza", validatePizzaBody, (req: Request, res: Response) => {
@@ -50,8 +66,7 @@ app.post("/api/pizza", validatePizzaBody, (req: Request, res: Response) => {
 app.delete("/api/pizza/:id", (req: Request, res: Response) => {
   const pizza = pizzas.find((c) => c.id === parseInt(req.params.id));
   if (!pizza) {
-    res.status(404).send("not found");
-    return;
+    return res.status(404).send({ message: "no pizza with that id to delete" });
   }
   const index = pizzas.indexOf(pizza);
   pizzas.splice(index, 1);
@@ -62,10 +77,13 @@ app.delete("/api/pizza/:id", (req: Request, res: Response) => {
 app.put("/api/pizza/:id", validatePizzaBody, (req: Request, res: Response) => {
   const pizza = pizzas.find((c) => c.id === parseInt(req.params.id));
   if (!pizza) {
-    res.status(404).send("not found");
+    return res.status(404).send({ message: "no pizza with that id to update" });
     return;
   }
   pizza.name = req.body.name;
+  pizza.filling = req.body.filling;
+  pizza.size = req.body.size;
+
   res.send(pizza);
 });
 
