@@ -19,10 +19,10 @@ const data = loadJSON("pizza.json")
 function saveJSON(filename = "", json = '""') {
   return fs.writeFileSync(filename, JSON.stringify(json, null, 2))
 }
-saveJSON("pizza.json", data)
+// saveJSON("pizza.json", data)
 
 app.use(express.json());
-app.listen(PORT, () => console.log(`Listening on port ${PORT}...`));
+// app.listen(PORT, () => console.log(`Listening on port ${PORT}...`));
 
 interface Pizza {
   id: number,
