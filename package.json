@@ -11,10 +11,10 @@
   "scripts": {
     "start": "node dist/server.js",
     "build": "tsc",
-    "dev": "nodemon server.ts",
+    "dev": "nodemon src/server.ts",
     "check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@types/node": "^18.7.6"
+    "@types/node": "^18.7.11"
   }
 }

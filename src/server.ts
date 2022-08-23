@@ -22,7 +22,7 @@ function saveJSON(filename = "", json = '""') {
 // saveJSON("pizza.json", data)
 
 app.use(express.json());
-// app.listen(PORT, () => console.log(`Listening on port ${PORT}...`));
+app.listen(PORT, () => console.log(`Listening on port ${PORT}...`));
 
 interface Pizza {
   id: number,
