@@ -1,22 +1,38 @@
-{
-  "pizzas": [
-    {
-      "id": 1,
-      "name": "hawaii",
-      "filling": "pineapple",
-      "size": "child pizza"
-    },
-    {
-      "id": 2,
-      "name": "margaritha",
-      "filling": "tomato sauce",
-      "size": "regular"
-    },
-    {
-      "id": 3,
-      "name": "kebab pizza",
-      "filling": "kebab",
-      "size": "family"
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "name": "hawaiiedit",
+    "filling": "fdasfdsa",
+    "size": "bark"
+  },
+  {
+    "id": 3,
+    "name": "hawaiiedit",
+    "filling": "fdasfdsa",
+    "size": "bark"
+  },
+  {
+    "id": 4,
+    "name": "hawaiiedit",
+    "filling": "eeeeee",
+    "size": "bark"
+  },
+  {
+    "id": 5,
+    "name": "ocean pizza",
+    "filling": "tuna",
+    "size": "small"
+  },
+  {
+    "id": 2,
+    "name": "pizza two",
+    "filling": "pommes",
+    "size": "gigantic"
+  },
+  {
+    "id": 6,
+    "name": "hawaiiedit",
+    "filling": "eeeeee",
+    "size": "bark"
+  }
+]

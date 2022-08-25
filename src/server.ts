@@ -1,25 +1,23 @@
 import { NextFunction, Request, Response } from "express";
+import fs from "fs";
+import joi from "joi";
 
-const fs = require('fs')
-const joi = require("joi");
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-function loadJSON(filename = '') {
-  return JSON.parse(fs.existsSync(filename)
-    ? fs.readFileSync(filename).toString()
-    : "null")
+function loadJSON(filename = ''): Pizza[] {
+  if (fs.existsSync(filename)) {
+    const jsonData = fs.readFileSync(filename, { encoding: 'utf-8' });
+    if (jsonData.length > 0)
+      return JSON.parse(jsonData);
+  }
+  return []
 }
 
-const data = loadJSON("pizza.json")
-
-// console.log(loadJSON("pizza.json"))
-
-function saveJSON(filename = "", json = '""') {
-  return fs.writeFileSync(filename, JSON.stringify(json, null, 2))
+function saveJSON(pizzas: Pizza[]) {
+  return fs.writeFileSync("pizza.json", JSON.stringify(pizzas, null, 2))
 }
-// saveJSON("pizza.json", data)
 
 app.use(express.json());
 app.listen(PORT, () => console.log(`Listening on port ${PORT}...`));
@@ -31,25 +29,20 @@ interface Pizza {
   size: string
 }
 
-const pizzas: Pizza[] = [
-  { id: 1, name: "hawaii", filling: "pineapple", size: "child pizza" },
-  { id: 2, name: "margaritha", filling: "tomato sauce", size: "regular" },
-  { id: 3, name: "kebab pizza", filling: "kebab", size: "family" },
-];
+const pizzas: Pizza[] = loadJSON("pizza.json");
 
 app.get("/api/pizza", (req: Request, res: Response) => {
-  res.send(pizzas)
-  // res.send(loadJSON("pizza.json"));
+  res.send(loadJSON("pizza.json"));
 });
 
 app.get("/api/pizza/:id", (req: Request, res: Response) => {
   const pizza = pizzas.find((c) => c.id === parseInt(req.params.id));
   if (!pizza) {
-    return res.status(404).send({ message: "no pizza with that id" });
+    return res.status(404).send({ message: "No pizza with that id" });
   } else
     res
       .status(200)
-      .send({ pizza });
+      .send({ message: pizza.name + " found." });
 });
 
 app.post("/api/pizza", validatePizzaBody, (req: Request, res: Response) => {
@@ -60,31 +53,32 @@ app.post("/api/pizza", validatePizzaBody, (req: Request, res: Response) => {
     size: req.body.size
   };
   pizzas.push(pizza);
-  res.send(pizza);
+  saveJSON(pizzas)
+  res.status(200).send({ message: pizza.name + " added to Pizza file." })
 });
 
 app.delete("/api/pizza/:id", (req: Request, res: Response) => {
   const pizza = pizzas.find((c) => c.id === parseInt(req.params.id));
   if (!pizza) {
-    return res.status(404).send({ message: "no pizza with that id to delete" });
+    return res.status(404).send({ message: "no pizza with id:" + req.params.id + " found to delete." });
   }
   const index = pizzas.indexOf(pizza);
   pizzas.splice(index, 1);
-
-  res.status(200).send(pizza.name + " removed");
+  saveJSON(pizzas)
+  res.status(200).send({ message: pizza.name + " removed" });
 });
 
 app.put("/api/pizza/:id", validatePizzaBody, (req: Request, res: Response) => {
   const pizza = pizzas.find((c) => c.id === parseInt(req.params.id));
   if (!pizza) {
-    return res.status(404).send({ message: "no pizza with that id to update" });
-    return;
+    return res.status(404).send({ message: "no pizza with id:" + req.params.id + " found to update." });
   }
   pizza.name = req.body.name;
   pizza.filling = req.body.filling;
   pizza.size = req.body.size;
-
-  res.send(pizza);
+  pizzas.push(pizza);
+  saveJSON(pizzas)
+  res.status(200).send({ message: pizza.name + " edited in Pizza file." })
 });
 
 function validatePizzaBody(req: Request, res: Response, next: NextFunction) {
