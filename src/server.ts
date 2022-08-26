@@ -58,7 +58,7 @@ app.post("/api/pizza", validatePizzaBody, (req: Request, res: Response) => {
 app.delete("/api/pizza/:id", (req: Request, res: Response) => {
   const pizza = pizzas.find((c) => c.id === parseInt(req.params.id));
   if (!pizza) {
-    return res.status(404).send({ message: "no pizza with id:" + req.params.id + " found to delete." });
+    return res.status(404).send({ message: "No pizza with id:" + req.params.id + " found to delete." });
   }
   const index = pizzas.indexOf(pizza);
   pizzas.splice(index, 1);

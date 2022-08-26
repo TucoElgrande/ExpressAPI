@@ -1,11 +1,11 @@
 Daniels inlämning av TypeScript Express API
 
-
 ######
 Instruktioner för att köra projektet.
-1. npm i -D @types/node
-2. npm run build
-3. npm start
+1. cd expressapi
+2. npm i -D @types/node
+3. npm run build
+4. npm start
 #####
 
 Krav för godkänt:
