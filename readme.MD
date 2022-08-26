@@ -1,11 +1,12 @@
 Daniels inlämning av TypeScript Express API
 
-Instruktioner för att köra projektet.
 
+######
+Instruktioner för att köra projektet.
 1. npm i -D @types/node
 2. npm run build
 3. npm start
-
+#####
 
 Krav för godkänt:
 1. Projektet innehåller minst 4 st. endpoints (GET, POST, PUT & DELETE för en resurs) [X]
@@ -24,9 +25,10 @@ Krav för väl godkänt:
 presentera datan, redigeringsformulär skall fyllas i med befintlig information. 
 5. Ytterligare en GET endpoint skall läggas till där det går att hämta ett specifikt objekt [X]
 
-###
+#####
 I mappen "expressapi" hittar du tsconfig och den jsonfil som används.
-###
+#####
 I "src" mappen hittar du server.ts/server.js samt server.rest
-###
+#####
 Daniel Josefsson 
+#####

@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Hawaii",
+    "filling": "Pineapple",
+    "size": "Medium"
+  },
+  {
+    "id": 2,
+    "name": "Kebab Pizza",
+    "filling": "Kebab",
+    "size": "Family"
+  },
+  {
+    "id": 3,
+    "name": "Capricciossa",
+    "filling": "Mushroom",
+    "size": "Small"
+  },
+  {
+    "id": 4,
+    "name": "Margharita",
+    "filling": "Cheese",
+    "size": "Regular"
+  }
+]
