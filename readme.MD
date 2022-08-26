@@ -1,15 +1,11 @@
-npm i express typescript @types/express @types/node nodemon ts-node
+Daniels inlämning av TypeScript Express API
 
-1. Kör npm run build
-2. npm run start
-3.npm i -D @types/node
+Instruktioner för att köra projektet.
 
-joi
+1. npm i -D @types/node
+2. npm run build
+3. npm start
 
-
-source.addMissingImports, "source
-
-package.json   // "main": "index.js",
 
 Krav för godkänt:
 1. Projektet innehåller minst 4 st. endpoints (GET, POST, PUT & DELETE för en resurs) [X]
@@ -27,3 +23,10 @@ Krav för väl godkänt:
 4. Ett klient-gränssnitt skall byggas för att anropa API:ets alla olika endpoints och 
 presentera datan, redigeringsformulär skall fyllas i med befintlig information. 
 5. Ytterligare en GET endpoint skall läggas till där det går att hämta ett specifikt objekt [X]
+
+###
+I mappen "expressapi" hittar du tsconfig och den jsonfil som används.
+###
+I "src" mappen hittar du server.ts/server.js samt server.rest
+###
+Daniel Josefsson 

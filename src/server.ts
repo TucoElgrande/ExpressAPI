@@ -6,6 +6,9 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(express.json());
+app.listen(PORT, () => console.log(`Listening on port ${PORT}...`));
+
 function loadJSON(filename = ''): Pizza[] {
   if (fs.existsSync(filename)) {
     const jsonData = fs.readFileSync(filename, { encoding: 'utf-8' });
@@ -19,16 +22,12 @@ function saveJSON(pizzas: Pizza[]) {
   return fs.writeFileSync("pizza.json", JSON.stringify(pizzas, null, 2))
 }
 
-app.use(express.json());
-app.listen(PORT, () => console.log(`Listening on port ${PORT}...`));
-
 interface Pizza {
   id: number,
   name: string,
   filling: string,
   size: string
 }
-
 const pizzas: Pizza[] = loadJSON("pizza.json");
 
 app.get("/api/pizza", (req: Request, res: Response) => {
@@ -41,8 +40,7 @@ app.get("/api/pizza/:id", (req: Request, res: Response) => {
     return res.status(404).send({ message: "No pizza with that id" });
   } else
     res
-      .status(200)
-      .send({ message: pizza.name + " found." });
+      .json(pizza)
 });
 
 app.post("/api/pizza", validatePizzaBody, (req: Request, res: Response) => {
